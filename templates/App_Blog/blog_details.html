@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block title %} BLOG Details{% endblock  %}
+
+
+{% block body_block %}
+
+
+
+
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('/media/{{blog.blog_image}}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>{{ blog.blog_title }}</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by : 
+                        <a href="#!"><strong>@{{ blog.author }}</a>
+                        on {{ blog.publish_date }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<h6>{{ blog.liked_blog.count }} Likes<i class="bi bi-hand-thumbs-up-fill" id="like-dislike" ></i> | {{ blog.blog_comment.count }} Comments</h6>
+
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p>
+                    {{ blog.blog_content|linebreaks }}
+                </p>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+
+        <hr>
+        <style>
+            #like-dislike{
+        font-size:xxx-large;
+            }
+        </style> 
+        {% if not liked %}
+          
+        
+        <a href="{% url 'App_Blog:liked_post' pk=blog.pk %}">
+            
+            <i class="bi bi-hand-thumbs-up" id="like-dislike"></i>
+            Hit the Like button if you like this post!
+            
+        </a>
+        {% else %}
+        <a href="{% url 'App_Blog:unliked_post' pk=blog.pk %}">
+            
+            <i class="bi bi-hand-thumbs-up-fill" id="like-dislike" title="Dislike ?"></i>
+            You Liked this post!
+            
+        </a>
+        {% endif %}
+        <hr>
+        <br><br>
+
+        <div class="col-sm-6">
+            <form method="post">
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                
+      
+                <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+                <button type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
+            </form>
+        </div>
+
+        <br>
+
+        <h4 class="mb-0">Recent comments:</h4>
+                                
+        <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+
+        <section style="background-color: #4d4341;">
+
+            {% for comment in blog.blog_comment.all %}
+            
+            <div class="container my-5 py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10">
+                        <div class="card text-dark">
+                            <div class="card-body p-4">
+                                
+                                
+
+                                     
+                                    <div class="d-flex flex-start">
+                                        <img class="rounded-circle shadow-1-strong me-3"
+                                         src="/media/defaultimage.jpeg" alt="avatar" width="60"
+                                         height="60" />
+                                            <div>   
+                                                
+                                                <h6 class="fw-bold mb-1">@{{ comment.user }}</h6>
+                                                    <div class="d-flex align-items-center mb-3">
+                                                         <p class="mb-0">
+                                                              {{ comment.comment_date }}
+                                                                <span class="badge bg-primary">Active</span>
+                                                         </p>
+                                                         
+                                                    </div>
+                                                    <p class="mb-0">
+                                                        {{comment.comment}}
+                                                    </p>
+                                                    <hr class="my-0" />
+                                                    
+                                            </div>
+                                    </div>
+                                       
+                            </div>
+          
+                            
+                            
+                                
+                    
+                        </div>
+          
+                    
+          
+                    
+                    
+                    
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+
+
+        
+
+
+
+
+
+
+        
+           
+        </div>
+
+<br><br><br>
+
+    
+
+{% endblock body_block %}

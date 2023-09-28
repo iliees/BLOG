@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} Edit Blog{% endblock  %}
+
+
+{% block body_block %}
+
+    {% if blog.author == user %}
+
+        <form method="post" enctype="multipart/form-data">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-info btn-sm" >Update</button>
+        </form>
+        {{ else }}
+        <p> You are not allowed to edit the post</p>
+  
+    {% endif %}
+
+{% endblock body_block %}

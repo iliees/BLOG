@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% load static %}
+{% block title %} Home{% endblock  %}
+
+
+
+
+
+
+
+
+
+{% block body_block %}
+
+
+
+<!-- Page Header-->
+<header class="masthead " style="background-image: url('/media/home-bg.jpg')">
+
+     <div class="container position-relative px-4 px-lg-5">
+         <div class="row gx-4 gx-lg-5 justify-content-center">
+             <div class="col-md-10 col-lg-8 col-xl-7">
+                 <div class="site-heading">
+                     <h1 class="Chronicles">Wanderlust Chronicles</h1>
+                     <span class="subheading">Embark on a virtual journey through the world's most captivating destinations, one story at a time</span>
+                 </div>
+             </div>
+         </div>
+     </div>
+   </header>
+
+
+
+
+        {% for blog in blogs %}
+
+        <h2>{{ blog.blog_title }}</h2>
+        <h6><i>{{ blog.publish_date }}</i></h6>
+
+        <div class="row">
+           <div class="col-sm-4">
+                <img src="/media/{{blog.blog_image}}" alt="{{ blog.blog_title }}" title="{{ blog.blog_title }}" width="100%">
+           </div>
+
+           <div class="col-sm-8">
+                <p>{{ blog.blog_content|range_filter|linebreaks }}
+                    {% if user.is_authenticated %} 
+                    <a href="{% url 'App_Blog:blog_details' slug=blog.slug %}">Read More</a>
+                    {% else %}
+                    <div class="alert alert-warning" role="alert">
+                       <a href="{% url 'App_Login:signin' %}">Login to read More!</a> 
+                      </div>
+                    {% endif %} 
+                </p>
+                <hr>
+                <h6>Posted By: <a href="#">{{ blog.author }}</a></h6>
+                <h6>{{ blog.liked_blog.count }} Likes | {{ blog.blog_comment.count }} Comments</h6>
+           </div>
+            <hr>
+
+        </div>
+
+
+
+
+
+
+
+        {% endfor %}
+
+
+
+{% endblock body_block %}

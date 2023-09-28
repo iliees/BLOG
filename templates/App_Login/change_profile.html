@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Edit Profile{% endblock  %}
+
+
+{% block body_block %}
+<h2> Profile Edit:</h2>
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    
+    <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+</form>
+     <a href="{% url 'App_Login:pass_change' %}" class="badge bg-primary">Clic here if you want to change your password</a> *
+
+{% endblock body_block %}
